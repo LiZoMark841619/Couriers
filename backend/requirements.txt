@@ -9,6 +9,7 @@ ecdsa==0.19.1
 Flask==3.1.1
 Flask-Caching==2.3.1
 Flask-Compress==1.17
+flask-cors==6.0.0
 gunicorn==23.0.0
 itsdangerous==2.2.0
 Jinja2==3.1.6
