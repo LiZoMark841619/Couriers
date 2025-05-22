@@ -1,6 +1,5 @@
 from flask import Flask
 from flask_cors import CORS
-from app.settings import logger
 from app.configs import Config
 
 app = Flask(__name__)
