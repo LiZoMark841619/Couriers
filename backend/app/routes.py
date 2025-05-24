@@ -5,3 +5,4 @@ routes = Blueprint('routes', __name__)
 @routes.route("/ping", methods=["GET"])
 def ping():
     return "pong", 200
+
