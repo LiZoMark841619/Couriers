@@ -1,32 +1,24 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import SignIn from './screens/SignIn';
+import SignUp from './screens/SignUp';
 import Navbar from './components/Navbar';
+
+export type RootStackParamList = {
+  SignIn: undefined;
+  SignUp: undefined;
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <NavigationContainer>
       <Navbar />
-      <Text style={styles.welcome}>Welcome to Couriers App!</Text>
-      <StatusBar style="auto" />
-    </View>
+      <Stack.Navigator initialRouteName="SignIn">
+        <Stack.Screen name="SignIn" component={SignIn} />
+        <Stack.Screen name="SignUp" component={SignUp} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  welcome: {
-    top: -200,
-    fontFamily: 'Arial', // You can adjust this value
-    fontSize: 28, // You can adjust this value
-    fontWeight: 'bold',
-    marginVertical: 20,
-    color: '#333', // You can adjust this value
-    textAlign: 'center',
-    paddingHorizontal: 20,
-  },
-});

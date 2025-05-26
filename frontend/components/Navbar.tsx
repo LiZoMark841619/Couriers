@@ -1,56 +1,39 @@
+import React from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../App';
 
 export default function Navbar() {
-    const handleRegister = () => {
-        alert('Register pressed!');
-    };
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
-    const handleLogin = () => {
-        alert('Login pressed!');
-    };
-
-    const handleProfile = () => {
-        alert('Profile pressed!');
-    };
-
-    return (
-        <View style={styles.navbar}>
-            <Pressable onPress={handleRegister} style={styles.button}>
-                <Text style={styles.buttonText}>Register</Text>
-            </Pressable>
-            <Pressable onPress={handleLogin} style={styles.button}>
-                <Text style={styles.buttonText}>Login</Text>
-            </Pressable>
-            <Pressable onPress={handleProfile} style={styles.button}>
-                <Text style={styles.buttonText}>Profile</Text>
-            </Pressable>
-        </View>
-    );
+  return (
+    <View style={styles.navbar}>
+      <Pressable onPress={() => navigation.navigate('SignUp')} style={styles.button}>
+        <Text style={styles.buttonText}>Sign Up</Text>
+      </Pressable>
+      <Pressable onPress={() => navigation.navigate('SignIn')} style={styles.button}>
+        <Text style={styles.buttonText}>Sign In</Text>
+      </Pressable>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    navbar: {
-        flexDirection: 'row',
-        width: '100%',
-        height: 60,
-        position: 'relative',
-        justifyContent: 'space-evenly',
-        alignItems: 'center',
-        paddingVertical: 10,
-        backgroundColor: '#f8f8f8',
-        borderBottomWidth: 1,
-        borderBottomColor: '#e0e0e0',
-    },
-    button: {
-        paddingHorizontal: 16,
-        paddingVertical: 8,
-        borderRadius: 5,
-        color: '#ffffff',
-        backgroundColor: '#007bff',
-    },
-    buttonText: {
-        fontSize: 19,
-        fontWeight: 'bold',
-        color: '#ffffff',
-    },
+  navbar: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    paddingVertical: 20,
+    backgroundColor: '#f8f8f8',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e7e7e7',
+  },
+  button: {
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#007AFF',
+  },
 });
