@@ -36,7 +36,7 @@ export default function SignIn() {
       />
       {error ? <Text style={styles.error}>{error}</Text> : null}
       <Button title="Submit" onPress={handleSignIn} />
-        <Button title="Don't have an account? Sign Up" onPress={() => navigation.navigate('SignUp')} />
+      <Button title="Don't have an account? Sign Up" onPress={() => navigation.canGoBack()} />
     </View>
   );
 }

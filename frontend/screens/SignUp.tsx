@@ -13,6 +13,10 @@ export default function SignUp() {
   const handleSignUp = async () => {
     try {
       const response = await api.post('/sign_up', { username, email, password });
+      if (response.status !== 201) {
+        throw new Error('Sign up failed');
+      }
+      alert('Sign up successful! You can now sign in.');
       // Handle successful login (e.g., save token, navigate)
     } catch (err) {
       setError('Invalid credentials');

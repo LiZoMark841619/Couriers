@@ -21,6 +21,8 @@ export default function Navbar() {
 const styles = StyleSheet.create({
   navbar: {
     flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 40,
     justifyContent: 'space-evenly',
     paddingVertical: 20,
     backgroundColor: '#f8f8f8',
@@ -28,8 +30,8 @@ const styles = StyleSheet.create({
     borderBottomColor: '#e7e7e7',
   },
   button: {
-    paddingHorizontal: 16,
-    paddingVertical: 16,
+    paddingHorizontal: 8,
+    paddingVertical: 8,
   },
   buttonText: {
     fontSize: 16,
