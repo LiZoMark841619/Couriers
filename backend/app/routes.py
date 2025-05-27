@@ -2,6 +2,7 @@ from flask import Blueprint
 from flask import request, jsonify
 from app.models import User
 from app import db
+from bcrypt import hashpw, gensalt, checkpw
 
 routes = Blueprint('routes', __name__)
 
@@ -10,11 +11,11 @@ def signup():
     data = request.get_json()
     if not data or not data.get('username') or not data.get('email') or not data.get('password'):
         return jsonify({"error": "Missing required fields"}), 400
-    
+    hashed_password = hashpw(data['password'].encode('utf-8'), gensalt())
     new_user = User(
         username=data['username'],
         email=data['email'],
-        password=data['password']
+        password=hashed_password.decode('utf-8')
     )
     
     db.session.add(new_user)
