@@ -1,5 +1,5 @@
-from flask import Blueprint
-from flask import request, jsonify
+from flask import Blueprint, request, jsonify
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from app.models import User
 from app import db
 from bcrypt import hashpw, gensalt, checkpw
@@ -29,14 +29,21 @@ def signin():
     if not data or not data.get('username') or not data.get('password'):
         return jsonify({"error": "Missing required fields"}), 400
     
-    user = User.query.filter_by(username=data['username'], password=data['password']).first()
+    user = User.query.filter_by(username=data['username']).first()
     
     if user and checkpw(data['password'].encode('utf-8'), user.password.encode('utf-8')):
-        return jsonify({"message": "Sign in successful"}), 200
+        access_token = create_access_token(identity=user.username)
+        return jsonify({"access_token": access_token, "message": "Sign in successful"}), 200
     else:
         return jsonify({"error": "Invalid username or password"}), 401
-    
+
+@routes.route("/protected", methods=["GET"])
+@jwt_required()
+def protected():
+    current_user = get_jwt_identity()
+    return jsonify({"message": f"Hello, {current_user}! This is a protected route."}), 200
+
 @routes.route("/sign_out", methods=["POST"])
 def signout():
-    db.session.clear()
+    # JWT is stateless; sign out is handled on the client by deleting the token
     return jsonify({"message": "Sign out successful"}), 200
