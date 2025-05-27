@@ -28,4 +28,5 @@ class Config:
     DB_NAME = get_env_variable('DB_NAME', 'test_db')
     DB_USER = get_env_variable('DB_USER', 'test_user')
     DB_PASSWORD = get_env_variable('DB_PASSWORD', 'test_password')
+    JWT_SECRET_KEY = get_env_variable('JWT_SECRET_KEY')
     SQLALCHEMY_DATABASE_URI = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
