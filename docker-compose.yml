@@ -21,6 +21,7 @@ services:
       DB_NAME: ${DB_NAME}
       DB_HOST: db
       DB_PORT: 5432
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
     depends_on:
       - db
     ports:
