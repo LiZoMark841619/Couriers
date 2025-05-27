@@ -31,7 +31,7 @@ def signin():
     
     user = User.query.filter_by(username=data['username'], password=data['password']).first()
     
-    if user:
+    if user and checkpw(data['password'].encode('utf-8'), user.password.encode('utf-8')):
         return jsonify({"message": "Sign in successful"}), 200
     else:
         return jsonify({"error": "Invalid username or password"}), 401
