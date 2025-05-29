@@ -1,20 +1,39 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../App';
 import api from '../api';
+import * as SecureStore from 'expo-secure-store';
+
+// useState is a React Hook for managing local state in a function component.
+// SecureStore is used for securely storing sensitive data like JWT tokens on the device.
+// StackNavigationProp and RootStackParamList are used for type-safe navigation.
 
 export default function SignIn() {
-  const navigation = useNavigation();
+  // Type the navigation prop for type safety
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList, 'SignIn'>>();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const handleSignIn = async () => {
+    setError('');
     try {
       const response = await api.post('/sign_in', { username, password });
-      // Handle successful login (e.g., save token, navigate)
-    } catch (err) {
-      setError('Invalid credentials');
+      if (response.status === 200) {
+        // Store the JWT token securely
+        await SecureStore.setItemAsync('access_token', response.data.access_token);
+        // Navigate to Home (replace 'Home' with your main screen name if you add one)
+        // navigation.navigate('Home');
+      } else {
+        setError('Sign in failed. Please try again.');
+      }
+    } catch (err: any) {
+      setError(
+        err.response?.data?.error ||
+        'Invalid credentials or network error.'
+      );
     }
   };
 
@@ -26,6 +45,7 @@ export default function SignIn() {
         value={username}
         onChangeText={setUsername}
         style={styles.input}
+        autoCapitalize="none"
       />
       <TextInput
         placeholder="Password"
@@ -36,7 +56,10 @@ export default function SignIn() {
       />
       {error ? <Text style={styles.error}>{error}</Text> : null}
       <Button title="Submit" onPress={handleSignIn} />
-      <Button title="Don't have an account? Sign Up" onPress={() => navigation.canGoBack()} />
+      <Button
+        title="Don't have an account? Sign Up"
+        onPress={() => navigation.navigate('SignUp')}
+      />
     </View>
   );
 }
